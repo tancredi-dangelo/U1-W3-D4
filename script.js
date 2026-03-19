@@ -54,30 +54,45 @@ draftButton.addEventListener("click", function() {
 
 
 // CREATE PLAYER CARD 
-const cards = document.getElementById("playerCards") // access player cards div
+const cards = document.getElementById("playerCards")
+
 const generateCards = function () {
-    let playerInput = document.getElementById("playerInput")
-    for (let i = 1; i <= playerInput.value.length; i++) { // create nth player cards divs
+    const playerInput = document.getElementById("playerInput")
+    const numberOfCards = Number(playerInput.value)
+
+    cards.innerHTML = "" // clear previous cards
+
+    for (let i = 1; i <= numberOfCards; i++) {
+
         let playerCard = document.createElement("div")
-        playerCard.setAttribute("id",`playerCard${i}`)
         playerCard.classList.add("player-card")
+
         let cellNumbers = []
-        while (cellNumbers.length <= 24) {  // create 24 cell divs per card
-            number = Math.ceil(Math.random()*numbersOnTheBoard)
-            if (!cellNumbers.includes(number)) {
-                cellNumbers.push(number)
+
+        while (cellNumbers.length < 24) {
+            let randomNumber = Math.floor(Math.random() * 76) + 1
+
+            if (!cellNumbers.includes(randomNumber)) {
+                cellNumbers.push(randomNumber)
             }
         }
-        cellNumbers.forEach((number) => {
-            let playerCell = document.createElement("div")
-            playerCell.classList.add("playerCell")
-        })
-    }
 
+        cellNumbers.forEach((number) => { 
+            let playerCell = document.createElement("div")
+            playerCell.classList.add("player-cell")
+
+            let p = document.createElement("p")
+            p.innerText = number
+
+            playerCell.appendChild(p)
+            playerCard.appendChild(playerCell)
+        })
+
+        cards.appendChild(playerCard)
     }
 }
-
 const selectButton = document.getElementById("cardsSelectButton")
-selectButton.addEventListener("click", function() {
+selectButton.addEventListener("click", function(e) {
+    e.preventDefault()
     generateCards()
 })
