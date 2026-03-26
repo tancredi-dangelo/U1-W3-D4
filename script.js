@@ -27,32 +27,6 @@ for (let i=0; i<76; i++) {
     numbersRemaining.push(i+1)
 }
 
-
-// CALL A NUMBER
-const callNumber = function(array) {
-    let arrayLength = array.length
-    let randomIndex = Math.floor(Math.random()*arrayLength)
-    let extracted = array[randomIndex]
-    array.splice(randomIndex,1)
-     // CANCEL DRAFTED NUMBERS 
-    let cellsArray = [...document.querySelectorAll("#board div")]
-    cellsArray.forEach(cell => {
-        let cellNumber = Number(cell.querySelector("p").innerText)
-        if (cellNumber === extracted) {
-            console.log("drafted", extracted)
-            cell.classList.add("drafted-cells")
-        }
-    })
-    if (numbersRemaining.length === 0) {
-        alert("All numbers drafted!")
-    }
-}
-
-draftButton.addEventListener("click", function() {
-    callNumber(numbersRemaining)
-})
-
-
 // CREATE PLAYER CARD 
 const cards = document.getElementById("playerCards")
 
@@ -95,4 +69,28 @@ const selectButton = document.getElementById("cardsSelectButton")
 selectButton.addEventListener("click", function(e) {
     e.preventDefault()
     generateCards()
+})
+
+// CALL A NUMBER
+const callNumber = function(array) {
+    let arrayLength = array.length
+    let randomIndex = Math.floor(Math.random()*arrayLength)
+    let extracted = array[randomIndex]
+    array.splice(randomIndex,1)
+     // CANCEL DRAFTED NUMBERS 
+    let cellsArray = [...document.querySelectorAll("#board div")]
+    cellsArray.forEach(cell => {
+        let cellNumber = Number(cell.querySelector("p").innerText)
+        if (cellNumber === extracted) {
+            console.log("drafted", extracted)
+            cell.classList.add("drafted-cells")
+        }
+    })
+    if (numbersRemaining.length === 0) {
+        alert("All numbers drafted!")
+    }
+}
+
+draftButton.addEventListener("click", function() {
+    callNumber(numbersRemaining)
 })
